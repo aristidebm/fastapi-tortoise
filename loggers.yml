@@ -1,0 +1,33 @@
+default-logger: &default-logger
+  handlers: [console]
+  propagate: true
+
+default-formatter: &default-formatter
+  default:
+    format: '[%(asctime)s] [%(process)d] [%(levelname)-8s]: %(message)s'
+
+console-handler: &console-handler
+  console:
+    class: logging.StreamHandler
+    formatter: default
+    level: INFO
+    stream: ext://sys.stdout
+
+config:
+  version: 1
+  disable_existing_loggers: false
+  
+  handlers:
+    <<: *console-handler
+
+  formatters:
+    <<: *default-formatter
+
+  loggers:
+    '':
+      <<: *default-logger
+      level: INFO
+
+    src.tasks:
+      <<: *default-logger
+      level: DEBUG

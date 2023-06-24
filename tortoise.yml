@@ -1,0 +1,40 @@
+common-apps: &common-apps
+  models:
+    models: [src.models, aerich.models]
+    default_connection: default
+
+common-config: &common-config
+    use_tz: ${USE_TZ}
+    timezone: ${TIMEZONE}
+
+config: 
+  test:
+    connections:
+      default: ${DATABASE_URL}
+    apps:
+      << : *common-apps
+    <<: *common-config
+  
+  development:
+    connections:
+      default: ${DATABASE_URL}
+    apps:
+      << : *common-apps
+    <<: *common-config
+  
+  staging:
+    connections:
+      default: ${DATABASE_URL}
+    apps:
+      << : *common-apps
+    <<: *common-config
+
+  production:
+    connections:
+      default: ${DATABASE_URL}
+    apps:
+      << : *common-apps
+    <<: *common-config
+
+
+

@@ -1,0 +1,67 @@
+[tool.poetry]
+name = "fastapi-tortoise"
+version = "0.1.0"
+description = ""
+authors = ["Aristide <aristide.bamazi@imsp-uac.org>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+# provide npm interface to run script with poetry
+# poetry task lint
+[tool.taskipy.tasks]
+lint = { cmd = "sh ./scripts/lint.sh" }
+format = { cmd = "sh ./scripts/format.sh"}
+
+[tool.isort]
+profile = "black"
+known_third_party = ["src"]
+
+# ruff config starting point
+[tool.ruff]
+# Enable flake8-bugbear (`B`) rules.
+select = ["E", "F", "B"]
+
+# Never enforce `E501` (line length violations).
+ignore = ["E501"]
+
+# Avoid trying to fix flake8-bugbear (`B`) violations.
+unfixable = ["B"]
+
+# Ignore `E402` (import violations) in all `__init__.py` files.
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402"]
+
+[tool.ruff.isort]
+known-third-party = ["src"]
+
+[tool.aerich]
+tortoise_orm = "src.settings.TORTOISE_ORM"
+location = "src/migrations"
+src_folder = "src"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.97.0"
+tortoise-orm = "^0.19.3"
+asyncpg = "^0.27.0"
+python-dotenv = "^1.0.0"
+aerich = "^0.7.1"
+pyyaml = "^6.0"
+tortoise-cli = "^0.1.2"
+uvicorn = "^0.22.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+ruff = "^0.0.274"
+rich = "^13.4.2"
+ipython = "^8.14.0"
+taskipy = "^1.11.0"
+pre-commit = "^3.3.3"
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.0"
+coverage = "^7.2.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
